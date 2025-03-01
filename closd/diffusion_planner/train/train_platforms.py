@@ -56,18 +56,44 @@ class NoPlatform(TrainPlatform):
     def __init__(self, save_dir, *args, **kwargs):
         pass
 
+# class WandBPlatform(TrainPlatform):
+#     import wandb
+#     def __init__(self, save_dir, config=None, *args, **kwargs):
+#         super().__init__(save_dir, *args, **kwargs)
+#         self.wandb.login(host=os.getenv("WANDB_BASE_URL"), key=os.getenv("WANDB_API_KEY"))
+#         self.wandb.init(
+#             project='RL',
+#             name=self.name,
+#             id=self.name,  # in order to send continued runs to the same record
+#             resume='allow',  # in order to send continued runs to the same record
+#             entity='tau-motion',
+#             save_code=True,
+#             config=config)  # config can also be sent via report_args()
+
+#     def report_scalar(self, name, value, iteration, group_name=None):
+#         self.wandb.log({name: value}, step=iteration)
+
+#     def report_media(self, title, series, iteration, local_path):
+#         files = glob.glob(f'{local_path}/*.mp4')
+#         self.wandb.log({series: [self.wandb.Video(file, format='mp4', fps=20) for file in files]}, step=iteration)
+
+#     def report_args(self, args, name):
+#         self.wandb.config.update(args)  #, allow_val_change=True)  # use allow_val_change ONLY if you want to change existing args (e.g., overwrite)
+
+#     def watch_model(self, *args, **kwargs):
+#         self.wandb.watch(args, kwargs)
+
+#     def close(self):
+#         self.wandb.finish()
+
+
 class WandBPlatform(TrainPlatform):
     import wandb
     def __init__(self, save_dir, config=None, *args, **kwargs):
         super().__init__(save_dir, *args, **kwargs)
         self.wandb.login(host=os.getenv("WANDB_BASE_URL"), key=os.getenv("WANDB_API_KEY"))
         self.wandb.init(
-            project='RL',
-            name=self.name,
-            id=self.name,  # in order to send continued runs to the same record
-            resume='allow',  # in order to send continued runs to the same record
-            entity='tau-motion',
-            save_code=True,
+            project='MotionX-DiP',
             config=config)  # config can also be sent via report_args()
 
     def report_scalar(self, name, value, iteration, group_name=None):
