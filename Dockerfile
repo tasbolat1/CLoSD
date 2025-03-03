@@ -9,6 +9,8 @@ WORKDIR /home/CLoSD
 
 # Install git
 RUN apt-get update && apt-get install -y git
+RUN apt install screen -y
+RUN apt install htop
 
 # Install Miniconda
 ENV MINICONDA_VERSION=py38_4.9.2

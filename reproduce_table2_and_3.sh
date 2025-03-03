@@ -30,3 +30,10 @@ kill -9 $PID
 echo "syncing wandb..."
 wandb sync --sync-all # final sync
 echo "Wandb Sync completed."
+
+
+python -m closd.diffusion_planner.eval.eval_humanml\
+ --guidance_param 7.5\
+ --model_path closd/diffusion_planner/save/my_DiP/model000600343.pt\
+ --autoregressive\
+ --train_platform_type WandBPlatform
